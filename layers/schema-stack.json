@@ -1,0 +1,62 @@
+{
+	"$schema": "http://json-schema.org/draft-07/schema",
+	"$id": "http://example.com/example.json",
+	"type": "object",
+	"title": "Stack",
+	"description": "The Stack Options",
+	"default": {},
+	"required": [
+		"stackname",
+		"interval",
+		"iconlist",
+		"devicetype",
+		"layers"
+	],
+	"properties": {
+		"stackname": {
+			"$id": "#/properties/stackname",
+			"type": "string",
+			"pattern": "^[a-z 0-9 _]*$",
+			"title": "Stack Name",
+			"description": "The name of this stack (Chars allowed: A-Z a-z 0-9 _)"
+		},
+		"interval": {
+			"$id": "#/properties/interval",
+			"type": "integer",
+			"title": "Interval",
+			"description": "Time between snapshots (in MS)",
+			"default": 2000
+		},
+		"iconlist": {
+			"$id": "#/properties/iconlist",
+			"type": "array",
+			"title": "The iconlist schema",
+			"description": "An explanation about the purpose of this instance.",
+			"default": [],
+			"additionalItems": true,
+			"items": {
+				"$id": "#/properties/iconlist/items/anyOf/0",
+				"type": "string",
+				"title": "Icon name",
+				"description": "Icon file names to match to class names in result array"
+			}
+		},
+		"devicetype": {
+			"$id": "#/properties/devicetype",
+			"type": "string",
+			"title": "Device Type",
+			"description": "An explanation about the purpose of this instance."
+		},
+		"layers": {
+			"$id": "#/properties/layers",
+			"type": "array",
+			"title": "Layer",
+			"description": "The layers for this stack",
+			"additionalItems": true,
+			"items": {
+				"$id": "#/properties/layers/items",
+				"anyOf": []
+			}
+		}
+	}
+}

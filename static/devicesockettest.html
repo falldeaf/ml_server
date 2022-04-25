@@ -1,0 +1,24 @@
+<html>
+	<head>
+		<script src="/socket.io/socket.io.js"></script>
+		<script>
+			// set-up a connection between the client and the server
+			var socket = io.connect();
+		
+			// let's assume that the client page, once rendered, knows what room it wants to join
+			var deviceid = "1";
+		
+			socket.on('connect', function() {
+				// Connected, let's sign-up for to receive messages for this room
+				socket.emit('deviceid', deviceid);
+			});
+		
+			socket.on('result', function(data) {
+				console.log('Incoming result:', data);
+			});
+		</script>
+	</head>
+	<body style="background-color: black; color:white">
+
+	</body>
+</html>

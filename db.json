@@ -1,0 +1,110 @@
+{
+  "stacks": [
+    {
+      "stackname": "collect_frame_stack",
+      "interval": 3600000,
+      "devicetype": "mjpeg",
+      "layers": [
+        {
+          "layername": "sftp",
+          "source": "frame",
+          "dir": "/training/plant/"
+        }
+      ]
+    },
+    {
+      "stackname": "collect_dog_stack",
+      "interval": 2000,
+      "iconlist": [
+        "dog",
+        "person"
+      ],
+      "devicetype": "mjpeg",
+      "layers": [
+        {
+          "layername": "coco",
+          "type": "detector",
+          "source": "frame"
+        },
+        {
+          "layername": "sftp",
+          "source": "dog",
+          "dir": "/training/dog/"
+        }
+      ]
+    },
+    {
+      "stackname": "example_stack",
+      "interval": 2000,
+      "iconlist": [
+        "dog",
+        "person"
+      ],
+      "devicetype": "mjpeg",
+      "layers": [
+        {
+          "layername": "coco",
+          "type": "detector",
+          "model": "cocossd",
+          "source": "frame"
+        },
+        {
+          "layername": "classalert",
+          "type": "alert",
+          "classname": "person",
+          "confidence": 0.6,
+          "cooldown": 120000,
+          "message": "I saw a person!",
+          "endpoint": "//join url"
+        },
+        {
+          "layername": "billieclassify",
+          "type": "classifier",
+          "source": "dog"
+        }
+      ]
+    }
+  ],
+  "devices": [
+    {
+      "id": 0,
+      "name": "plant cam",
+      "type": "mjpeg",
+      "url": "http://192.168.1.200/mjpeg/1",
+      "stackname": "collect_frame_stack",
+      "active": true,
+      "armed": false,
+      "capabilities": [
+        {
+          "light": true,
+          "neo": 6
+        }
+      ]
+    },
+    {
+      "id": 1,
+      "name": "dog cam",
+      "type": "mjpeg",
+      "url": "http://admin:@192.168.1.208/videostream.cgi",
+      "active": true,
+      "armed": false,
+      "stackname": "collect_dog_stack",
+      "capabilities": [
+        {
+          "pantilt": true
+        }
+      ]
+    },
+    {
+      "url": "http://blah.com/vid",
+      "name": "testcam",
+      "capabilities": {
+        "neopix": 1,
+        "light": true
+      },
+      "active": false,
+      "armed": false,
+      "id": "18bf7b48-a745-433c-8a8e-4a631ec3b5db"
+    }
+  ]
+}
